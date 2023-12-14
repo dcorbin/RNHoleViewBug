@@ -16,7 +16,11 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {RNHole, RNHoleView} from 'react-native-hole-view';
+import {
+  ERNHoleViewTimingFunction,
+  RNHole,
+  RNHoleView,
+} from 'react-native-hole-view';
 
 interface SampleTextProps {
   text: string;
@@ -39,14 +43,17 @@ function App(): JSX.Element {
   };
 
   let holes: RNHole[][] = [
-    [{x: 10, y: 10, width: 100, height: 100}],
-    [{x: 110, y: 110, width: 100, height: 100}],
-    [],
+    [{x: 10, y: 10, width: 100, height: 100, borderRadius: 50}],
+    [{x: 110, y: 110, width: 20, height: 20, borderRadius: 10}],
   ];
   return (
     <SafeAreaView style={backgroundStyle}>
       <RNHoleView
         holes={holes[step]}
+        animation={{
+          duration: 2000,
+          timingFunction: ERNHoleViewTimingFunction.LINEAR,
+        }}
         style={[
           {
             position: 'absolute',
@@ -70,7 +77,7 @@ function App(): JSX.Element {
           title={'Advance Step'}
           onPress={() => {
             let nextStep = step + 1;
-            if (step + 1 > holes.length) {
+            if (step + 1 >= holes.length) {
               nextStep = 0;
             }
 
